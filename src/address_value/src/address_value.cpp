@@ -14,21 +14,21 @@
 
 #include "address_value/address_value.hpp"
 
-#include "rclcpp_components/register_node_macro.hpp"
-
 #include <chrono>
 #include <functional>
 
 namespace address_value {
 
 AddressValue::AddressValue(const rclcpp::NodeOptions &node_options) : Node("address_value", node_options) {
+  // Declare parameters
   address_ = this->declare_parameter<int32_t>("address", 0);
   value_   = this->declare_parameter<int32_t>("value", 0);
 
-  publisher_ = this->create_publisher<address_value_msg::msg::AddressValue>("example_int", 10);
-
+  // Create publisher and subscription
+  publisher_    = this->create_publisher<address_value_msg::msg::AddressValue>("example_int", 10);
   subscription_ = this->create_subscription<address_value_msg::msg::AddressValue>("example_int", 10, std::bind(&AddressValue::on_message, this, std::placeholders::_1));
 
+  // Create timer
   using namespace std::chrono_literals;
   timer_ = this->create_wall_timer(1s, std::bind(&AddressValue::on_timer, this));
 
@@ -49,4 +49,5 @@ void AddressValue::on_message(const address_value_msg::msg::AddressValue::Shared
 
 }  // namespace address_value
 
+#include "rclcpp_components/register_node_macro.hpp"
 RCLCPP_COMPONENTS_REGISTER_NODE(address_value::AddressValue)

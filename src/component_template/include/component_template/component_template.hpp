@@ -20,7 +20,8 @@ class ComponentTemplate : public rclcpp::Node {
   rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr subscription_;
   rclcpp::TimerBase::SharedPtr                          timer_;
 
-  int32_t counter_{0};
+  int32_t     counter_{0};
+  std::string topic_name_{"example_int"};
 };
 }  // namespace component_template
 
