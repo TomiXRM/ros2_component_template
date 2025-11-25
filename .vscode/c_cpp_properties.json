@@ -3,15 +3,16 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**",
                 "/opt/ros/jazzy/include/**",
                 "${workspaceFolder}/src/**/include/**",
-                "${workspaceFolder}/build/**/rosidl_generator_cpp/**"
+                "${workspaceFolder}/build/**/rosidl_generator_cpp/**",
+                "${workspaceFolder}/build/**"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/clang",
+            "compilerPath": "/usr/bin/gcc",
             "cStandard": "c17",
-            "intelliSenseMode": "linux-clang-x64"
+            "cppStandard": "gnu++20",
+            "intelliSenseMode": "${default}"
         }
     ],
     "version": 4
