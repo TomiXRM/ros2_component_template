@@ -5,8 +5,8 @@
 
 #include "std_msgs/msg/int32.hpp"
 
-#include <cstdint>
 #include <chrono>
+#include <cstdint>
 
 namespace component_template {
 using namespace std::chrono_literals;
