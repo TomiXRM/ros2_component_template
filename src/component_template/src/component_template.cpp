@@ -1,22 +1,21 @@
 #include "component_template/component_template.hpp"
 
-#include <chrono>
 #include <functional>
 
 namespace component_template {
 
 ComponentTemplate::ComponentTemplate(const rclcpp::NodeOptions &node_options) : Node("component_template", node_options) {
   // Declare parameters
-  counter_    = this->declare_parameter<int32_t>("counter", 0);
+  counter_    = this->declare_parameter<int32_t>("initial_count", 0);
   topic_name_ = this->declare_parameter<std::string>("topic_name", "example_int");
+  interval_   = std::chrono::milliseconds(this->declare_parameter<int>("interval_ms", 1000));
 
   // Create publisher and subscription
   publisher_    = this->create_publisher<std_msgs::msg::Int32>(topic_name_, 10);
   subscription_ = this->create_subscription<std_msgs::msg::Int32>(topic_name_, 10, std::bind(&ComponentTemplate::on_message, this, std::placeholders::_1));
 
   // Create timer
-  using namespace std::chrono_literals;
-  timer_ = this->create_wall_timer(1s, std::bind(&ComponentTemplate::on_timer, this));
+  timer_ = this->create_wall_timer(interval_, std::bind(&ComponentTemplate::on_timer, this));
 
   RCLCPP_INFO(this->get_logger(), "component_template node has been started.");
 }

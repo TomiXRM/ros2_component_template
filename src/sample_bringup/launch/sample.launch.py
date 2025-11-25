@@ -4,29 +4,31 @@ from launch_ros.descriptions import ComposableNode
 
 
 def generate_launch_description():
-    component_node0 = ComposableNode(
+    component_node_a = ComposableNode(
         package='component_template',
         plugin='component_template::ComponentTemplate',
-        name='component_template_node',
+        name='component_template_nodeA',
         namespace='sample',
         parameters=[
             {
-                "counter": 0,
-                "topic_name": "example_int0"
+                "initial_count": 0,
+                "topic_name": "example_intA",
+                "interval_ms": 100,
             }
         ],
         extra_arguments=[{"use_intra_process_comms": True}],
     )
 
-    component_node1 = ComposableNode(
+    component_node_b = ComposableNode(
         package='component_template',
         plugin='component_template::ComponentTemplate',
-        name='component_template_node',
+        name='component_template_nodeB',
         namespace='sample',
         parameters=[
             {
-                "counter": 1000,
-                "topic_name": "example_int1"
+                "initial_count": 1000,
+                "topic_name": "example_intB",
+                "interval_ms": 1000,
             }
         ],
         extra_arguments=[{"use_intra_process_comms": True}],
@@ -37,9 +39,10 @@ def generate_launch_description():
         namespace='sample',
         package='rclcpp_components',
         executable='component_container_mt',
+
         composable_node_descriptions=[
-            component_node0,
-            component_node1,
+            component_node_a,
+            component_node_b,
         ],
         output='screen',
         emulate_tty=True,

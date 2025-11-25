@@ -6,8 +6,10 @@
 #include "std_msgs/msg/int32.hpp"
 
 #include <cstdint>
+#include <chrono>
 
 namespace component_template {
+using namespace std::chrono_literals;
 class ComponentTemplate : public rclcpp::Node {
  public:
   explicit ComponentTemplate(const rclcpp::NodeOptions &node_options);
@@ -20,8 +22,9 @@ class ComponentTemplate : public rclcpp::Node {
   rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr subscription_;
   rclcpp::TimerBase::SharedPtr                          timer_;
 
-  int32_t     counter_{0};
-  std::string topic_name_{"example_int"};
+  int32_t                   counter_{0};
+  std::string               topic_name_{"example_int"};
+  std::chrono::milliseconds interval_{1000ms};
 };
 }  // namespace component_template
 
