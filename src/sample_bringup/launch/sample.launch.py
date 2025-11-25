@@ -7,12 +7,12 @@ def generate_launch_description():
     component_node_a = ComposableNode(
         package='component_template',
         plugin='component_template::ComponentTemplate',
-        name='component_template_nodeA',
+        name='component_template_node_A',
         namespace='sample',
         parameters=[
             {
                 "initial_count": 0,
-                "topic_name": "example_intA",
+                "topic_name": "example_int_A",
                 "interval_ms": 100,
             }
         ],
@@ -22,12 +22,12 @@ def generate_launch_description():
     component_node_b = ComposableNode(
         package='component_template',
         plugin='component_template::ComponentTemplate',
-        name='component_template_nodeB',
+        name='component_template_node_B',
         namespace='sample',
         parameters=[
             {
                 "initial_count": 1000,
-                "topic_name": "example_intB",
+                "topic_name": "example_int_B",
                 "interval_ms": 1000,
             }
         ],

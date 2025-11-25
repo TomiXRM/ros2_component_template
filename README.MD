@@ -45,3 +45,58 @@ src/
     ├── include/<package_name>/<package_name>.hpp
     └── src/<package_name>.cpp
 ```
+
+## ComposableNodeのLaunchサンプル
+
+このテンプレートには、複数の Composable Node を単一のコンテナで起動するサンプル Launch ファイルが含まれています（`src/sample_bringup/launch/sample.launch.py`）。
+
+### サンプルの実行方法
+
+```bash
+colcon build
+source install/setup.bash
+ros2 launch sample_bringup sample.launch.py
+```
+
+### Launch ファイルの構成
+
+サンプルでは、2つの `component_template` ノードを `component_container_mt`（マルチスレッドコンテナ）で起動します:
+
+- **component_template_node_A**
+  - namespace: `sample`
+  - topic: `example_int_A`
+  - 初期カウント: 0
+  - 発行間隔: 100ms
+
+- **component_template_node_B**
+  - namespace: `sample`
+  - topic: `example_int_B`
+  - 初期カウント: 1000
+  - 発行間隔: 1000ms
+
+### 主な設定ポイント
+
+- **`ComposableNode`**: 各ノードの設定（package、plugin、name、namespace、parameters）
+- **`ComposableNodeContainer`**: 複数ノードをまとめて管理するコンテナ
+  - `executable='component_container_mt'`: マルチスレッド実行（シングルスレッド版は `component_container`）
+- **`use_intra_process_comms: True`**: プロセス内通信を有効化（低レイテンシ・ゼロコピー）
+
+### 自分のコンポーネントで使う場合
+
+生成したコンポーネントを Launch で起動するには:
+
+1. `package` を生成したパッケージ名に変更
+2. `plugin` を `<namespace>::<ClassName>` 形式で指定
+3. `parameters` に宣言したパラメータを設定
+4. 必要に応じてコンテナの `executable` をシングル/マルチスレッド切り替え
+
+```python
+my_node = ComposableNode(
+    package='my_package',
+    plugin='my_package::MyClass',
+    name='my_node',
+    namespace='my_namespace',
+    parameters=[{'param_name': value}],
+    extra_arguments=[{"use_intra_process_comms": True}],
+)
+```
