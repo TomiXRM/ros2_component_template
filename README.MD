@@ -100,3 +100,16 @@ my_node = ComposableNode(
     extra_arguments=[{"use_intra_process_comms": True}],
 )
 ```
+
+## Makefile コマンド一覧
+
+ルートディレクトリの `Makefile` で、よく使うコマンドを簡潔に実行できます:
+
+| コマンド            | 説明                                                      |
+| ------------------- | --------------------------------------------------------- |
+| `make help`         | 利用可能なコマンド一覧を表示                              |
+| `make build`        | 全パッケージをビルド（`--symlink-install` 付き）          |
+| `make format`       | C++ ファイルを clang-format で自動整形                    |
+| `make check-format` | フォーマットチェック（ファイル変更なし）                  |
+| `make clean`        | ビルド成果物を削除（`build/`, `install/`, `log/`）       |
+| `make test`         | 全テストを実行し、結果を詳細表示                          |
